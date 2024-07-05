@@ -4,6 +4,8 @@ import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { fetchMovies, fetchGenres } from '../services/tmdbApi';
 import MovieCard from '../components/MovieCard';
 
+interface MoviesScreenProps { }
+
 interface Movie {
     id: number;
     title: string;
@@ -19,7 +21,7 @@ interface Genre {
     name: string;
 }
 
-const MoviesScreen: React.FC = () => {
+const MoviesScreen: React.FC<MoviesScreenProps> = () => {
     const [year, setYear] = useState<number | null>(null);
     const [selectedCategory, setSelectedCategory] = useState<number[]>([]);
 
@@ -28,8 +30,8 @@ const MoviesScreen: React.FC = () => {
         fetchNextPage,
         hasNextPage,
         isFetchingNextPage,
-        isLoading,
-        isError,
+        isLoading: isMoviesLoading,
+        isError: isMoviesError,
     } = useInfiniteQuery({
         queryKey: ['movies', year, selectedCategory],
         queryFn: ({ pageParam = 1 }) => fetchMovies(year, pageParam, selectedCategory),
@@ -37,9 +39,11 @@ const MoviesScreen: React.FC = () => {
         initialPageParam: 1,
     });
 
-
-
-    const { data: genres, isLoading: isGenresLoading, isError: isGenresError } = useQuery<Genre[]>({
+    const {
+        data: genres,
+        isLoading: isGenresLoading,
+        isError: isGenresError,
+    } = useQuery<Genre[]>({
         queryKey: ['genres'],
         queryFn: fetchGenres,
     });
@@ -85,7 +89,7 @@ const MoviesScreen: React.FC = () => {
         </View>
     );
 
-    if (isLoading || isGenresLoading) {
+    if (isMoviesLoading || isGenresLoading) {
         return (
             <View style={styles.centered}>
                 <ActivityIndicator size="large" color="#0000ff" />
@@ -93,7 +97,7 @@ const MoviesScreen: React.FC = () => {
         );
     }
 
-    if (isError || isGenresError) {
+    if (isMoviesError || isGenresError) {
         return (
             <View style={styles.centered}>
                 <Text>Error loading movies or genres</Text>
@@ -148,30 +152,30 @@ const styles = StyleSheet.create({
     },
     header: {
         padding: 10,
-        backgroundColor: '#232323',
+        backgroundColor: '#1e1e1e',
     },
     categories: {
         flexDirection: 'row',
         marginTop: 10,
         marginBottom: 10,
-        paddingHorizontal: 10,
     },
     categoryButton: {
-        paddingVertical: 5,
-        paddingHorizontal: 10,
-        borderRadius: 5,
+        paddingVertical: 8,
+        paddingHorizontal: 15,
+        borderRadius: 10,
         backgroundColor: '#484848',
         marginRight: 10,
     },
     pressedCategory: {
-        opacity: 0.5,
+        opacity: 0.7,
     },
     selectedCategory: {
         backgroundColor: '#F00',
     },
     categoryText: {
         color: '#FFF',
-        fontSize: 16,
+        fontSize: 14,
+        textTransform: 'capitalize',
     },
     columnWrapper: {
         justifyContent: 'space-between',

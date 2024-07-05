@@ -5,14 +5,14 @@ interface MovieCardProps {
     title: string;
     image: string;
     genre: string;
-    vote_average: number
+    vote_average: number;
 }
 
 const MovieCard: React.FC<MovieCardProps> = ({ title, image, genre }) => {
     return (
         <View style={styles.card}>
             <Image source={{ uri: image }} style={styles.image} />
-            <View style={styles.textCard}>
+            <View style={styles.textContainer}>
                 <Text style={styles.title}>{title}</Text>
                 <View style={styles.titleContainer}>
                     <Text style={styles.genre}>{genre}</Text>
@@ -27,37 +27,30 @@ const styles = StyleSheet.create({
         flex: 1,
         margin: 5,
         backgroundColor: '#424242',
-        borderRadius: 2,
+        borderRadius: 4,
         overflow: 'hidden',
     },
-    textCard: {
+    textContainer: {
         paddingVertical: 10,
-        paddingHorizontal: 5
+        paddingHorizontal: 5,
     },
     image: {
         width: '100%',
         height: 220,
-        objectFit: "cover"
     },
     titleContainer: {
-        display: 'flex',
-        flexDirection: 'row'
+        flexDirection: 'row',
     },
     title: {
-        fontSize: 16,
+        fontSize: 14,
         fontWeight: 'bold',
         margin: 5,
-        color: '#fff'
+        color: '#fff',
     },
     genre: {
-        fontSize: 14,
+        fontSize: 10,
         color: '#fff',
         marginHorizontal: 5,
-    },
-    description: {
-        fontSize: 12,
-        color: '#fff',
-        margin: 5,
     },
 });
 
