@@ -9,7 +9,7 @@ type Props = {
     selectedCategory: number[]
 }
 
-const GenerList: React.FC<Props> = ({ onPress, selectedCategory }) => {
+const GenreList: React.FC<Props> = ({ onPress, selectedCategory }) => {
     const {
         data: genres,
     } = useQuery<Genre[]>({
@@ -36,7 +36,7 @@ const GenerList: React.FC<Props> = ({ onPress, selectedCategory }) => {
     )
 }
 
-export default GenerList
+export default GenreList
 
 const styles = StyleSheet.create({
     categories: {

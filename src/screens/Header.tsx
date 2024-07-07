@@ -1,12 +1,12 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import GenerList from './GenerList';
+import GenreList from './GenreList';
 
 const Header: React.FC<{ onCategoryPress: (id: number) => void; selectedCategory: number[] }> = ({ onCategoryPress, selectedCategory }) => {
     return (
         <View style={styles.header}>
             <Text style={styles.title}>MovieFix</Text>
-            <GenerList onPress={onCategoryPress} selectedCategory={selectedCategory} />
+            <GenreList onPress={onCategoryPress} selectedCategory={selectedCategory} />
         </View>
     );
 }
